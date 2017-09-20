@@ -27,6 +27,13 @@ namespace TheShop
             _suppliers.Add(Supplier3);
         }
 
+        public ShopService(List<Supplier> suppliers)
+        {
+            DatabaseDriver = new DatabaseDriver();
+            logger = new Logger();
+            _suppliers = suppliers;
+        }
+
         public void OrderAndSellArticle(int id, int maxExpectedPrice, int buyerId)
         {
             #region ordering article
@@ -40,13 +47,13 @@ namespace TheShop
                 if (articleExists)
                 {
                     tempArticle = item.GetArticle(id);
-                    if (maxExpectedPrice < tempArticle.ArticlePrice)
+                    if (maxExpectedPrice > tempArticle.ArticlePrice)
                     {
                         article = tempArticle;
                     }
                 }
             }
-            article = tempArticle;
+
             #endregion
 
             #region selling article
